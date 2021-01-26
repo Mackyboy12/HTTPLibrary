@@ -30,11 +30,15 @@ class Website
           if((sock = socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol)) == -1) throw "Something wrong with creating socket";
 	  if((connect(sock, servinfo->ai_addr, servinfo->ai_addrlen)) != 0) throw "Error in connecting to website";
       }
-      int sendToSite(std::string request){
-        return send(sock, request.c_str(), strlen(request.c_str()), 0);
+      void sendToSite(std::string request){
+        if (send(sock, request.c_str(), strlen(request.c_str()), 0)  == -1){
+            throw "Error sending message"; 
+        }
       }
-      int recvFromSite(char buf[], int maxsize){
-        return recv(sock, buf, maxsize, 0);
+      void recvFromSite(char buf[], int maxsize){
+        if (recv(sock, buf, maxsize, 0) == -1){
+            throw "Error receving message";
+        }
       }
     ~Website(){
       close(sock);
