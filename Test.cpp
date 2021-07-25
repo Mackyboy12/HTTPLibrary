@@ -3,6 +3,10 @@
 
 
 int main(int argc, char* argv[]){
+    if(argc < 2){
+        std::cout << "Invalid arguments\n";
+        exit(0);
+    }
     try{
         Website site(argv[1]);
         std::cout << site.get(argv[2], 1000) << "\n";
